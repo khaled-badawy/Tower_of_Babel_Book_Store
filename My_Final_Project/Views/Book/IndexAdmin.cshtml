@@ -1,0 +1,61 @@
+﻿@model List<Book>
+
+@{
+    Layout = "_DemoLayout";
+    ViewData["Title"] = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-qyvI1+zLyEjJOG9LK4o4zcGZvAE3w/3DmuoiS8Wbw1OMxvUE5jK/p5m0m0WZP5CT+K6zHXE6H16+j8M2+6UyLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link href="~/css/Index.css" rel="stylesheet">
+
+
+<div class="header-container">
+    <h1>Your Books</h1>
+    <form id="searchForm">
+        <p class="searchbar">
+            <input class="search_input" type="text" id="search" name="search" placeholder="Search your books" value="@ViewBag.SearchBook" />
+            <input class="search_icon" type="submit" value="&#128269;" />
+        </p>
+    </form>
+</div>
+
+
+
+
+
+
+
+<p>
+    <a asp-action="Create">Create New Book</a>
+
+</p>
+<div id="booksTable">
+    @await Html.PartialAsync("_BooksTablePartial", @Model)
+</div>
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <!--Jquery Validation-->
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <!--Jquery unbotolsive-->
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+                <script>
+        $(function () {
+            //when you click submit on that form that function would be made
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();
+                var search = $('#search').val();
+                $.ajax({
+                    url: '/Book/Search?search='+search,
+                    type: 'GET',
+                    success:
+                    //data parameter represents the response that the server has sent back
+                    //sets the HTML content of the element with the ID "booksTable" to this data
+                    function (data) {
+                        $('#booksTable').html(data);
+                    },
+                });
+            });
+        });
+    </script>

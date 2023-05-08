@@ -1,0 +1,27 @@
+﻿@model List<Review>
+
+@{
+    Layout = null;
+    var count = 0;
+}
+
+
+
+
+<table class="table table-hover table-striped" id ="reviewsTable">
+    <thead>
+        <tr>
+            <th>Reviews</th>
+            <th>Ratings</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.textReview</td>
+                    <td>@item.rating</td>
+                </tr>
+        }
+    </tbody>
+</table>

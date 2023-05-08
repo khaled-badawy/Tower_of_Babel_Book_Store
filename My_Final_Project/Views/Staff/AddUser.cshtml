@@ -1,0 +1,80 @@
+﻿@using My_Final_Project.ViewModels;
+
+@model AddingUserVM
+@{
+    Layout = "_DemoLayout";
+}
+
+<div class="row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <form asp-action="AddUser">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="UserName" class="form-control" data-sb-validations="required" />
+                        <label asp-for="UserName" class="control-label"></label>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" />
+                        <label asp-for="Email" class="control-label"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="ConfirmEmail" class="form-control" />
+                        <label asp-for="ConfirmEmail" class="control-label"></label>
+                        <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" />
+                        <label asp-for="Password" class="control-label"></label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Address" class="form-control" />
+                        <label asp-for="Address" class="control-label"></label>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Phone" class="form-control" />
+                        <label asp-for="Phone" class="control-label"></label>
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Age" class="form-control" />
+                        <label asp-for="Age" class="control-label"></label>
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="Gender">
+
+                            <option value="1">Male</option> 
+                            <option value="2">Female</option> 
+                            <option value="3">Other</option> 
+                        </select>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select asp-for="roleId">
+                            @foreach (var role in ViewBag.Roles)
+                            {
+                                  <option value="@role.Id">@role.Name</option> 
+                            }
+                        </select>
+                    </div>
+
+                    <br />
+                    <div class="form-floating mb-3">
+                        <input type="submit" value="Register" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

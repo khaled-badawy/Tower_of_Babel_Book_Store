@@ -1,0 +1,116 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdvLayout";
+}
+<style>
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .marg {
+        width: 80%;
+        margin: 0 auto;
+    }
+    /*search&filter styles*/
+    .search-container {
+        position: relative;
+        display: inline-block;
+        margin: 10px;
+        position: absolute;
+        top: 13.5rem;
+        right: 15rem;
+    }
+
+        .search-container input[type="text"] {
+            width: 0;
+            padding: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            right: 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .search-container button {
+            width: 52px;
+            height: 52px;
+            border: none;
+            background-color: #abccaf;
+            border-radius: 25px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            transition: all 0.1s ease-in-out;
+        }
+
+            .search-container button:hover {
+                background-color: #59ab6e;
+            }
+
+        .search-container:hover input[type="text"] {
+            width: 250px;
+            padding: 10px 20px;
+            border: 1px solid #59ab6e;
+        }
+</style>
+
+<Main class="container-fluid marg mt-5">
+    <h2 class="text-center grad fs-1">Browse Our Entire Collection at the Tower of Babel</h2>
+    <hr class="mt-4 mb-3" />
+    <div class="d-flex w-50 justify-content-between">
+        <p class="fw-bold">Filter by Maximum Price</p>
+        <div class="form-check form-check-inline align-self-lg-stretch">
+            <input class="form-check-input" type="radio" name="priceFilter" id="priceFilter1" value="300">
+            <label class="form-check-label" for="priceFilter1">€ 300</label>
+        </div>
+
+        <div class="form-check form-check-inline align-self-auto">
+            <input class="form-check-input" type="radio" name="priceFilter" id="priceFilter2" value="500">
+            <label class="form-check-label" for="priceFilter2">€ 500</label>
+        </div>
+        <div class="form-check form-check-inline align-self-auto">
+            <input class="form-check-input" type="radio" name="priceFilter" id="priceFilter2" value="800">
+            <label class="form-check-label" for="priceFilter2">€ 800</label>
+        </div>
+    </div>
+
+
+    <form asp-action="UserSearch" asp-controller="Book" method="get" class="mb-3">
+
+        <div class="search-container">
+            <input id="author-input" type="text" name="author" placeholder="author name">
+            <button id="submit-button" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16"> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" /> </svg></button>
+        </div>
+
+
+
+    </form>
+    <section class="best-Sellers mb-5">
+        <partial name="_BookPartial"></partial>
+        <hr class="mt-5 mb-3" />
+    </section>
+
+</Main>
+
+<script>
+    var priceFilters = document.querySelectorAll('input[name="priceFilter"]');
+    priceFilters.forEach(function (priceFilter) {
+        priceFilter.addEventListener('change', function () {
+            let selectedPriceFilter = document.querySelector('input[name="priceFilter"]:checked').value;
+            window.location.href = '/book/priceFilter?price=' + selectedPriceFilter;
+        })
+    });
+    const authorInput = document.getElementById('author-input');
+    const submitButton = document.getElementById('submit-button');
+
+    submitButton.addEventListener('click', function (event) {
+        if (authorInput.value === '') {
+            event.preventDefault();
+        }
+    });
+</script>

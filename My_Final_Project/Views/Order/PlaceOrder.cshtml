@@ -1,0 +1,82 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "PlaceOrder";
+    Layout = "_AdvLayout";
+}
+
+
+<div class="row container-fluid" style="width:80%; margin:0 auto;">
+    <h2 class="fs-1 fw-bold text-center mt-5 mb-3" style="color:#59ab6e">New Order</h2>
+    <div class="d-flex justify-content-between">
+        <a asp-controller="book" asp-action="Index" class="btn btn-success">Continue Shopping</a>
+        <form method="post" asp-controller="order" asp-action="clearcart">
+            <input type="submit" class="btn alert-danger" value="Clear Shopping Cart" />
+        </form>
+    </div>
+    <hr class="mt-4 mb-3"/>
+    <div class="col-md-7">
+        <h3 class="fs-3 fw-semibold mt-2" style="color:#59ab6e">Order Contents</h3>
+        <hr class="my-3"/>
+        @foreach (var item in Model.items)
+        {
+            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                    <img src="/Images/@item.book.CoverImage"
+                     class="img-fluid rounded-3" alt="Cotton T-shirt">
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <h6 class="text-muted">Book</h6>
+                    <h6 class="text-black mb-0">@item.book.Title</h6>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2">
+                    <h6 class="text-muted">Quantity</h6>
+                    <h6 class="text-black mb-0">@item.Quantity</h6>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <h6 class="mb-0">€ @item.totalPrice</h6>
+                </div>
+            </div>
+            <hr class="my-4">
+        }
+    </div>
+    <div class="col-lg-4 bg-grey mb-5">
+            <div class="ms-5">
+            <h3 class="fw-bold mt-2" style=" color:#59ab6e">Order Details</h3>
+            <hr class="my-3"/>
+                <div class="d-flex justify-content-between mb-4">
+                    <h5 class="text-uppercase">Shipping Cost</h5>
+                <h5>€ @Model.ShippingCost</h5>
+                </div>
+            <form asp-action="PlaceOrder">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="form-group mb-2">
+                    <label asp-for="ShippingAddress" class="form-label">Shipping Address</label>
+                    <input asp-for="ShippingAddress" class="form-control form-control-lg" />
+                    <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                </div>
+                
+
+                <div class="form-outline mb-2">
+                    <label asp-for="Notes" class="form-label">Order Notes</label>
+                    <input asp-for="Notes" class="form-control form-control-lg" />
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+
+
+                <hr class="mt-3 mb-2">
+
+                <div class="d-flex justify-content-between mb-2">
+                    <h5 class="text-uppercase">Total price</h5>
+                    <h5>€ @Model.TotalPrice</h5>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Confirm Order" class="btn btn-success" />
+                </div>
+            </form>
+         </div>
+</div>
+</div>
+
+

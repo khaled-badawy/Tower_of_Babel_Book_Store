@@ -1,0 +1,51 @@
+﻿@model My_Final_Project.ViewModels.RoleViewModel
+@{
+    ViewData["Title"] = "StaffMenu";
+    Layout = "_AdvLayout";
+}
+
+<h1>StaffMenu</h1>
+
+<div>
+     <a class="btn btn-primary" onclick="AddRole()">Add Role</a>
+</div>
+<form asp-action="AddRole" id="RoleForm" class="hiddenForm">
+    <div class="form-floating mb-3">
+        <input asp-for="Name" class="form-control" data-sb-validations="required" />
+        <label asp-for="Name" class="control-label">Role Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+
+
+<div>
+    <a class="btn btn-primary" onclick="AddAccount()">Add Account</a>
+</div>
+
+<form asp-action="AddRole" id="RoleForm" class="hiddenForm">
+    <div class="form-floating mb-3">
+        <input asp-for="Name" class="form-control" data-sb-validations="required" />
+        <label asp-for="Name" class="control-label">Role Name</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="submit" value="Add" class="btn btn-primary" />
+    </div>
+</form>
+
+
+
+@section Scripts {
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script>
+        function AddRole(){
+            var roleForm = document.getElementById("RoleForm");
+            roleForm.classList.toggle("hiddenForm");
+            console.log("HIIIIII!!!!!!!!")
+        }
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

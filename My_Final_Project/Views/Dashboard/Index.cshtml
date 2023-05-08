@@ -1,0 +1,262 @@
+﻿@model DashboardHomeVM
+@{
+    Layout = "_DemoLayout";
+
+}
+<style>
+
+    .row {
+        display: flex;
+        justify-content: space-evenly;
+        text-align: center;
+    }
+
+    .avgRatings {
+        width: 350px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .blue {
+        color: #5905ad;
+    }
+
+    .yellow {
+        color: #f3da35;
+    }
+
+    .green {
+        color: #198754;
+    }
+
+    .rate {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .rate:hover {
+            border-color: #f3da35;
+            cursor: pointer;
+        }
+
+    .order {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .order:hover {
+            border-color: red;
+            cursor: pointer;
+        }
+
+    .user {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .user:hover {
+            border-color: #5905ad;
+            cursor: pointer;
+        }
+
+
+    .book {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+        .book:hover {
+            border-color: #198754;
+            cursor: pointer;
+        }
+
+    #chartContainer {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+        position: relative;
+        top: 5px;
+        right: 10px;
+    }
+
+    #profitContainer {
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+        position: relative;
+        top: 5px;
+        right: 10px;
+    }
+
+    .graph:hover {
+        border-color: #ff8800;
+    }
+
+    .graph {
+        width: 400px;
+        height: 350px;
+        border: 5px solid transparent;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    h1 {
+        font-size: 33px;
+    }
+</style>
+@{
+    // Calculate the total price for each category
+    Dictionary<string, double> categoryTotals = new Dictionary<string, double>();
+
+    foreach (var item in Model.items)
+    {
+        if (categoryTotals.ContainsKey(item.category.Name))
+        {
+            categoryTotals[item.category.Name] += item.totalPrice;
+        }
+        else
+        {
+            categoryTotals[item.category.Name] = item.totalPrice;
+        }
+    }
+
+    // Create the data for the chart
+    var dataProfit = new List<object>();
+
+    foreach (var element in categoryTotals)
+    {
+        dataProfit.Add(new { x = element.Key, value = element.Value });
+    }
+}
+
+<div class="row">
+    <div class="avgRatings card info-card sales-card rate" onclick="location.href='@Url.Action("IndexAdmin", "Review")'">
+        <h1><svg style="color: #f3da35" xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16"> <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" fill="#f3da35"></path> </svg> Average <span class="yellow">rating</span></h1>
+        <h2 class="yellow">@Model.avgRev</h2>
+    </div>
+    <div class="avgRatings card info-card sales-card order" onclick="location.href='@Url.Action("IndexAdmin", "Order")'">
+        <h1>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="35" height="35" viewBox="0 0 256 256" xml:space="preserve">
+
+            <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+            <path d="M 70.111 90 H 19.888 c -2.672 0 -4.846 -2.174 -4.846 -4.846 v -66.44 c 0 -2.672 2.174 -4.846 4.846 -4.846 h 9.061 c 0.552 0 1 0.448 1 1 s -0.448 1 -1 1 h -9.061 c -1.569 0 -2.846 1.276 -2.846 2.846 v 66.44 c 0 1.569 1.276 2.846 2.846 2.846 h 50.223 c 1.569 0 2.847 -1.276 2.847 -2.846 v -66.44 c 0 -1.569 -1.277 -2.846 -2.847 -2.846 h -9.061 c -0.553 0 -1 -0.448 -1 -1 s 0.447 -1 1 -1 h 9.061 c 2.673 0 4.847 2.174 4.847 4.846 v 66.44 C 74.958 87.826 72.784 90 70.111 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 61.051 19.383 H 28.949 c -0.552 0 -1 -0.448 -1 -1 v -3.397 c 0 -5.314 4.264 -9.651 9.55 -9.77 C 38.654 2.109 41.636 0 45 0 s 6.346 2.109 7.501 5.216 c 5.286 0.119 9.55 4.456 9.55 9.77 v 3.397 C 62.051 18.936 61.604 19.383 61.051 19.383 z M 29.949 17.383 h 30.102 v -2.397 c 0 -4.286 -3.486 -7.772 -7.772 -7.772 H 51.77 c -0.454 0 -0.851 -0.305 -0.967 -0.744 C 50.105 3.838 47.72 2 45 2 c -2.719 0 -5.105 1.838 -5.803 4.47 c -0.116 0.438 -0.513 0.744 -0.967 0.744 h -0.509 c -4.286 0 -7.772 3.487 -7.772 7.772 V 17.383 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 47.4 11.485 h -4.801 c -0.552 0 -1 -0.448 -1 -1 s 0.448 -1 1 -1 H 47.4 c 0.553 0 1 0.448 1 1 S 47.953 11.485 47.4 11.485 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 31.019 58.883 h -4.948 c -1.271 0 -2.305 -1.034 -2.305 -2.305 V 51.63 c 0 -1.271 1.034 -2.305 2.305 -2.305 h 4.948 c 1.271 0 2.305 1.034 2.305 2.305 v 4.948 C 33.323 57.849 32.29 58.883 31.019 58.883 z M 26.071 51.325 c -0.168 0 -0.305 0.137 -0.305 0.305 v 4.948 c 0 0.168 0.137 0.305 0.305 0.305 h 4.948 c 0.168 0 0.305 -0.137 0.305 -0.305 V 51.63 c 0 -0.168 -0.137 -0.305 -0.305 -0.305 H 26.071 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 64.271 51.325 H 39.872 c -0.552 0 -1 -0.447 -1 -1 s 0.448 -1 1 -1 h 24.399 c 0.553 0 1 0.447 1 1 S 64.824 51.325 64.271 51.325 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 52.653 58.883 H 39.872 c -0.552 0 -1 -0.447 -1 -1 s 0.448 -1 1 -1 h 12.781 c 0.553 0 1 0.447 1 1 S 53.206 58.883 52.653 58.883 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 27.789 40.452 c -0.319 0 -0.62 -0.152 -0.808 -0.411 l -3.023 -4.148 c -0.325 -0.446 -0.227 -1.072 0.219 -1.397 c 0.447 -0.326 1.072 -0.227 1.397 0.219 l 2.134 2.928 l 3.758 -6.263 c 0.284 -0.474 0.897 -0.628 1.372 -0.343 c 0.474 0.284 0.627 0.898 0.343 1.372 l -4.534 7.557 c -0.172 0.288 -0.478 0.469 -0.813 0.484 C 27.819 40.451 27.804 40.452 27.789 40.452 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 64.271 32.895 H 39.872 c -0.552 0 -1 -0.448 -1 -1 s 0.448 -1 1 -1 h 24.399 c 0.553 0 1 0.448 1 1 S 64.824 32.895 64.271 32.895 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 52.653 40.452 H 39.872 c -0.552 0 -1 -0.448 -1 -1 s 0.448 -1 1 -1 h 12.781 c 0.553 0 1 0.448 1 1 S 53.206 40.452 52.653 40.452 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 31.019 78.102 h -4.948 c -1.271 0 -2.305 -1.034 -2.305 -2.305 V 70.85 c 0 -1.271 1.034 -2.305 2.305 -2.305 h 4.948 c 1.271 0 2.305 1.034 2.305 2.305 v 4.947 C 33.323 77.067 32.29 78.102 31.019 78.102 z M 26.071 70.545 c -0.168 0 -0.305 0.137 -0.305 0.305 v 4.947 c 0 0.168 0.137 0.305 0.305 0.305 h 4.948 c 0.168 0 0.305 -0.137 0.305 -0.305 V 70.85 c 0 -0.168 -0.137 -0.305 -0.305 -0.305 H 26.071 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 64.271 70.545 H 39.872 c -0.552 0 -1 -0.447 -1 -1 s 0.448 -1 1 -1 h 24.399 c 0.553 0 1 0.447 1 1 S 64.824 70.545 64.271 70.545 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+            <path d="M 52.653 78.102 H 39.872 c -0.552 0 -1 -0.447 -1 -1 s 0.448 -1 1 -1 h 12.781 c 0.553 0 1 0.447 1 1 S 53.206 78.102 52.653 78.102 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                </g>
+                </svg>
+            Number of <span class="red">orders</span>
+        </h1>
+        <h2 class="red">@Model.orders.Count</h2>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="avgRatings card info-card sales-card user" onclick="location.href='@Url.Action("IndexAdmin", "Account")'">
+        <h1><svg style="color: #5905ad" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 640 512"><path d="M351.8 367.3v-44.1C328.5 310.7 302.4 304 274.7 304H173.3c-95.73 0-173.3 77.65-173.3 173.4C.0005 496.5 15.52 512 34.66 512h378.7c11.86 0 21.82-6.337 28.07-15.43l-61.65-61.57C361.7 416.9 351.8 392.9 351.8 367.3zM224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM630.6 364.8L540.3 274.8C528.3 262.8 512 256 495 256h-79.23c-17.75 0-31.99 14.25-31.99 32l.0147 79.2c0 17 6.647 33.15 18.65 45.15l90.31 90.27c12.5 12.5 32.74 12.5 45.24 0l92.49-92.5C643.1 397.6 643.1 377.3 630.6 364.8zM447.8 343.9c-13.25 0-24-10.62-24-24c0-13.25 10.75-24 24-24c13.38 0 24 10.75 24 24S461.1 343.9 447.8 343.9z" fill="#5905ad"></path></svg> Number of <span class="blue">users</span></h1>
+        <h2 class="blue">@Model.users.Count</h2>
+    </div>
+    <div class="avgRatings card info-card sales-card book" onclick="location.href='@Url.Action("IndexAdmin", "Book")'">
+        <h1><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#198754" class="bi bi-book-half" viewBox="0 0 16 16"> <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z" /> </svg> Number of <span class="green">books</span></h1>
+        <h2 class="green">@Model.books.Sum(b=>b.Quantity)</h2>
+    </div>
+</div>
+<div class="row">
+    <!------------chart of books in each category------------->
+    <div class="graph card info-card sales-card ">
+
+        <div id="chartContainer" style="width: 400px; height: 350px;"></div>
+    </div>
+
+
+    <!--------chart of sales in each category----->
+    <div class="graph card info-card sales-card ">
+        <div id="profitContainer" style="width: 400px; height: 350px;"></div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-circular-gauge.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-pie.min.js"></script>
+
+
+    <script>
+        // Define the data for the graph of books in categories
+        var data = [];
+        @foreach (var category in Model.categories)
+        {
+            <text>data.push({ x: "@category.Name", value: @category.Books.Sum(b=>b.Quantity) }); </text>
+        }
+
+            // Draw the graph
+            anychart.onDocumentReady(function () {
+                var chart = anychart.pie(data);
+                chart.container("chartContainer");
+                //chart.fill("aquastyle");
+                chart.radius("30%");
+                chart.labels().position("outside");
+                chart.labels().fontSize(14);
+                chart.title("Number of books in each category");
+                var title = chart.title();
+                title.fontSize(20);
+                //title.fontDecoration("underline");
+                title.fontColor("black")
+                title.fontFamily("Nunito, sans-serif");
+                var legend = chart.legend();
+                legend.fontSize(16)
+                legend.fontColor("#424242")
+                legend.position("top");
+                legend.fontFamily("Nunito, sans-serif");
+                chart.background().fill("transparent");
+                chart.draw();
+            });
+
+
+
+        // Define the data for the graph of profits in categories
+
+
+        anychart.onDocumentReady(function () {
+            // we use Json.Serialize() to convert the dataProfit list to a JSON string
+            // then output it to the JavaScript code using Html.Raw()
+            var chart1 = anychart.pie(@Html.Raw(Json.Serialize(dataProfit)));
+            chart1.container("profitContainer");
+            //chart1.fill("aquastyle");
+            chart1.radius("30%");
+            chart1.labels().position("outside");
+            chart1.labels().fontSize(14);
+            chart1.title("Total Profit form each category");
+            var title1 = chart1.title();
+            title1.fontSize(20);
+            //title.fontDecoration("underline");
+            title1.fontColor("black")
+            title1.fontFamily("Nunito, sans-serif");
+            var legend1 = chart1.legend();
+            legend1.fontSize(16)
+            legend1.fontColor("#424242")
+            legend1.position("top");
+            legend1.fontFamily("Nunito, sans-serif");
+            chart1.background().fill("transparent");
+            chart1.draw();
+        });
+
+
+
+
+
+    </script>
+}

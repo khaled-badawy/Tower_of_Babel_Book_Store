@@ -1,0 +1,12 @@
+Admin username: Admin
+Password: @Admin1
+
+Customer username: Customer
+Password: @Customer1
+
+Team members:
+
+Eslam Ahmed
+Hadeer Samy
+Khaled Badawy
+Abdelrhman Abdallah 

@@ -1,0 +1,61 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "ViewOrders";
+    Layout = "_AdvLayout";
+}
+
+<style>
+    .marg {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .Pending{
+        background-color: #fff3cd;
+    }
+    .Delivered{
+        background-color: #d1e7dd;
+    }
+    .Cancelled{
+        background-color: #f8d7da;
+    }
+
+</style>
+
+<div class="containercontainer-fluid marg">
+    <h2 class="text-center mt-5 grad">My Orders</h2>
+    <hr class="my-3" />
+    @foreach (var item in Model)
+    {
+        <div class="card shadow-0 border mb-4 @item.status.ToString()">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-md-2">
+                        <p class=" mb-0">Status: @item.status.ToString()</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0">Address: @item.ShippingAddress</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0 small">Shipping Cost: @item.ShippingCost</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0 small">Item Per Order: @item.items.Count</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="mb-0 small">Total: € @item.TotalPrice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <hr class="my-4" />
+</div>
+

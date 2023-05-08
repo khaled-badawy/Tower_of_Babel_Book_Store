@@ -1,0 +1,19 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "PriceFilter";
+    Layout = "_AdvLayout";
+
+}
+<style>
+    .marg {
+        width: 80%;
+        margin: 0 auto;
+    }
+</style>
+
+<section class="best-Sellers marg mb-5 mt-5">
+    <h2 class="text-center fs-1" style="color:#59ab6e;">PriceFilter</h2>        
+    <hr class="mt-5 mb-3" />
+    <partial name="_BookPartial"></partial>
+    <hr class="mt-5 mb-3" />
+</section>

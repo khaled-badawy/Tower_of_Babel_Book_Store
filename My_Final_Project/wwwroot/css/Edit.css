@@ -1,0 +1,18 @@
+﻿.form-group {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        flex-basis: 200px;
+        margin-right: 30px;
+        vertical-align: middle;
+    }
+
+body {
+    font-family: "Nunito", sans-serif;
+}
+
+.col-md-4 {
+    width: 50%;
+}

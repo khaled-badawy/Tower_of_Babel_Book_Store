@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Identity;
+
+
+@model List<ApplicationUser>
+@inject UserManager<ApplicationUser> userManager
+@{
+    Layout = null;
+
+}
+<style>
+    td {
+  text-align: center;
+  vertical-align:middle;
+
+}
+th{
+      text-align: center;
+}
+
+.edit{
+    color:white;
+}
+.delete:hover{
+    color:black;
+}
+
+.greenn{
+    color:#198754
+}
+</style>
+
+<table class="table table-hover table-striped" id="usersTable">
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>Address</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Deleting</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (ViewBag.userId == item.Id)
+            {
+                    <tr>
+                            <td class ="greenn">@item.UserName</td>
+                            <td>@item.Address</td>
+                            <td>@item.Age</td>
+                            <td>@item.Email</td>
+                             <td>
+                        @{
+                            var roles = await userManager.GetRolesAsync(item);
+                            <text>@string.Join(", ", roles)</text>
+                        }
+                              </td>
+
+                            <td><button type="button" class="btn btn-danger delete" value="@item.Id" disabled>Delete</button></td>
+                        </tr>
+            }
+            else
+            {
+
+                    <tr>
+                            <td class ="greenn">@item.UserName</td>
+                            <td>@item.Address</td>
+                            <td>@item.Age</td>
+                            <td>@item.Email</td>
+                                     <td>
+                        @{
+                            var roles = await userManager.GetRolesAsync(item);
+                            <text>@string.Join(", ", roles)</text>
+                        }
+                                      </td>
+
+                            <td><button type="button" class="btn btn-danger delete" value="@item.Id">Delete</button></td>
+                        </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <!--Jquery Validation-->
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <!--Jquery unbotolsive-->
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        var deleteBtns = document.querySelectorAll("button.delete");
+        deleteBtns.forEach(del =>{
+            del.addEventListener("click",(e)=>{
+                var id = del.value;
+                var result = confirm("Are you sure to delete this user");
+                if (result == true){
+                    window.location.href = `/Account/Delete/${id}`
+                }
+                else{
+                    window.location.href = "/Account/IndexAdmin"
+                }
+            })
+        })
+    </script>

@@ -1,0 +1,34 @@
+﻿@model List<Book>
+
+@{
+    Layout = "_AdvLayout";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.SearchText))
+{
+    <div class="container-fluid marg mt-5">
+
+    <h2 class="text-center fs-1" style="color:#59ab6e;">Search Results for: @ViewBag.SearchText</h2>
+    <hr class="mt-5 mb-3"/>
+    </div>
+}
+else
+{
+        <div class="container-fluid marg mt-5">
+        <h2 class="text-center fs-1"style="color:#59ab6e;">userSearch Results</h2>
+        <hr class="mt-5 mb-3" />
+     </div>
+
+}
+<style>
+    .marg {
+        width: 80%;
+        margin: 0 auto;
+    }
+</style>
+
+<section class="best-Sellers marg mb-5 mt-5">
+    <partial name="_BookPartial"></partial>
+    <hr class="mt-5 mb-3" />
+</section>
+

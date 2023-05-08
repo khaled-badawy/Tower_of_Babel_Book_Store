@@ -1,0 +1,138 @@
+﻿@model OrdersWithItems
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_DemoLayout";
+}
+
+<h2>All Orders</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="font-size:25px">Username</th>
+            <th style="font-size:25px">ShippingAddress</th>
+            <th style="font-size:25px">ShippingCost</th>
+            <th style="font-size:25px">TotalPrice</th>
+            <th style="font-size:25px">Notes</th>
+            <th style="font-size:25px">status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.allOrders)
+        {
+            <div class="accordion-elements">
+            <tr class="acc-title">
+                <td>@item.user.UserName</td>
+                <td>@item.ShippingAddress</td>
+                <td>@item.ShippingCost</td>
+                <td>@item.TotalPrice</td>
+                <td> @item.Notes</td>
+                <td>@item.status</td>
+            </tr>
+
+            <tr class="acc-body">
+                <td colspan="5">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="font-size:18px; color:#198754;">Quantity</th>
+                                <th style="font-size:18px; color:#198754;">Total Price</th>
+                                <th style="font-size:18px; color:#198754;">title of book</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                @foreach (var i in Model.allOrderedItems.Where(o => o.OrderId == item.Id))
+                                {
+                                <tr>
+                                    <td style="font-size:16px; color:#424242;">@i.Quantity</td>
+                                    <td style="font-size:16px; color:#424242;">@i.totalPrice</td>
+                                    <td style="font-size:16px; color:#424242;">@i.book.Title</td>
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </div>
+
+        }
+    </tbody>
+</table>
+
+
+
+<style>
+    table {
+        text-align: center;
+    }
+
+    .acc-title {
+        font-size: 22px;
+        border: 2px solid;
+        position: relative;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+        .acc-title:hover {
+            background-color: #fff9ab
+        }
+
+        .acc-title::after {
+            content: "+";
+            position: absolute;
+            top: 0px;
+            right: 5px;
+        }
+
+    .acc-body {
+        font-size: 24px;
+        border: 2px solid;
+        border-color: 0px;
+        display: none;
+        /*      overflow: hidden;*/
+        transition: max-height 0.5s ease-out;
+    }
+
+    .open {
+        display: table-row;
+        height: auto;
+    }
+</style>
+
+
+
+
+
+<script>
+
+    var titles = document.querySelectorAll('.acc-title');
+    var elements = document.querySelectorAll(".accordion-elements")
+    var bodies = document.querySelectorAll(".acc-body")
+
+    function toggleAccordion() {
+        var index = Array.from(titles).indexOf(this);
+
+        // ye2fel kolo
+
+        if (bodies[index].classList.contains("open")) {
+            bodies[index].classList.remove("open")
+        }
+        else {
+            for (var i = 0; i < elements.length; i++) {
+                bodies[i].classList.remove("open");
+            }
+
+            bodies[index].classList.toggle("open")
+        }
+        // yft7 elly ana dost 3aleha bs
+
+
+    }
+
+    for (var i = 0; i < titles.length; i++) {
+        titles[i].addEventListener('click', toggleAccordion);
+    }
+
+</script>

@@ -1,0 +1,58 @@
+﻿@model List<Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdvLayout";
+}
+<style>
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hoverable-cards.card-img-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .hoverable-cards.card:hover .card-img-overlay {
+        opacity: 0.9;
+    }
+
+    .hoverable-cards.card-body {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px;
+    }
+
+    .trial-container {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+</style>
+<section class="container-fluid pb-5 bg-white">
+    <h2 class="text-center pt-5 grad">Find Your Next Favorite Genre: Top Categories at the Tower of Babel</h2>
+    <div class="trial-container">
+    <hr class="mb-5 mt-3"/>
+        <div class="row row-cols-4 g-4 flex-wrap">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card text-center bg-dark text-white hoverable-cards" style="width:17rem; height:30rem;">
+                        <img class="card-img-top" src="/Images/@category.Image" alt="Category Image" style="width:17rem; height:30rem;">
+                        <div class="card-body card-img-overlay d-grid align-content-lg-center align-items-center hoverable-cards" style="width:17rem; height:30rem;">
+                            <h4 class="card-title mb-3">@category.Name</h4>
+                            <p class="card-text ">@category.Description</p>
+                            <a asp-controller="book" asp-action="CategoryBooks" asp-route-id="@category.Id" class="btn btn-success ">Explore @category.Name </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <hr class="mt-5 mb-3" />
+    </div>
+</section>
+
+
+

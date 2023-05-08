@@ -1,0 +1,58 @@
+﻿@model List<OrderedItem>
+@{
+    ViewData["Title"] = "ViewCart";
+    Layout = "_AdvLayout";
+}
+<style>
+    .marg{
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+</style>
+
+<div class="containercontainer-fluid marg">
+    <h2 class="text-center mt-5 grad">My Cart</h2>
+    <div class="d-flex justify-content-between">
+        <form asp-action="ClearCart" asp-controller="order">
+             <button type="submit" class="btn alert-danger mt-4 text-center ">Clear Cart</button>
+        </form>
+        <a asp-action="placeorder" asp-controller="order" class="btn btn-success mt-4 text-center ">Confirm Order</a>
+    </div>
+    <hr class="my-3"/>
+    @foreach (var item in Model)
+    {
+        <div class="card shadow-0 border mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img class="card-img-top w-50" src="/Images/@item.book.CoverImage" alt="Card image">
+                    </div>
+                    <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0">Title: @item.book.Title</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0 small">Author: @item.book.Author.Name</p>
+                    </div>
+                    <div class="col-md-3 text-center d-flex justify-content-center align-items-center">
+                        <p class=" mb-0 small">Qty: @item.Quantity</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                        <p class="mb-0 small">Total: € @item.totalPrice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+
+                    

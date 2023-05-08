@@ -1,0 +1,71 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Details";
+    Layout = "_AdvLayout";
+}
+
+<style>
+        .marg {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hoverable-cards.card-img-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .hoverable-cards.card:hover .card-img-overlay {
+        opacity: 0.9;
+    }
+
+    .hoverable-cards.card-body {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px;
+    }
+    div.card>.card-body{
+        flex-grow:0.5;
+    }
+</style>
+
+
+<div class="row container-fluid marg">
+    <h2 class="grad text-center pt-5">@Model.Title's Details</h2>
+    <hr class="mt-4 mb-4"/>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="/Images/@Model.CoverImage" alt="Product Image" class="card-img-top" style="height:37rem;" />
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100" style="border: none; min-width:40em; max-width:100em; flex-grow:1;">
+            <div class="card-body mt-3 ms-3">
+                <h5 class="card-title">@Model.Title</h5>
+                <p class="card-text">@Model.Description</p>
+                <p class="card-text">Category: @Model.Category.Name</p>
+                <p class="card-text">Price: @Model.Price egp</p>
+                <p class="card-text">Author: @Model.Author.Name </p>
+                <p class="card-text">Quantity in stock: @Model.Quantity</p>
+                <a asp-controller="book" asp-action="index" class="btn btn-success">See All books</a>
+            </div>
+            <form method="post" asp-controller="book" asp-action="details" asp-route-id="@Model.Id" asp-route-bookcartid="@Model.BookCartId" class="form-control d-flex ">
+                <label for="quantity" class="form-control w-auto">Quantity: </label>
+                <Select id="quantity" name="orderQuantity" class="form-control w-auto">
+                    <option value="1" selected>1</option>
+                    <option value="2" >2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </Select>
+                <input id="sbBtn" type="submit" class="btn btn-success ms-auto" value="Add to Cart" />
+            </form>
+        </div>
+    </div>
+    <hr class="mb-4" />
+</div>

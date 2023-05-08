@@ -1,0 +1,51 @@
+﻿@model Author
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DemoLayout";
+}
+<link href="~/css/Edit.css" rel="stylesheet">
+<h1>Edit @Model.Name</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-route-id="@Model.Id" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Image</label>
+                <input type="file" name="file" class="form-control" accept=".jpg,.png" />
+            </div>
+            <div class="form-group">
+                <label asp-for="BriefHistory" class="control-label"></label>
+                <textarea asp-for="BriefHistory" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="BriefHistory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PublishCount" class="control-label"></label>
+                <input asp-for="PublishCount" class="form-control" />
+                <span asp-validation-for="PublishCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save changes" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="IndexAdmin">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,62 @@
+
+@{
+    ViewData["Title"] = "us";
+    Layout = "_AdvLayout";
+}
+<style>
+    .about-container {
+        position: relative;
+        margin: 50px;
+        padding: 30px;
+        background-image: url("/Images/about.jpg");
+            background-size: cover;
+    }
+
+                .about-container::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+            z-index:1;
+        }
+        .about-container h2 {
+            color: #59ab6e;
+            font-size: 2em;
+            margin-bottom: 1.5em;
+            margin-top: 2em;
+            z-index: 3;
+        position: relative;
+        }
+
+        .about-container p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 1em;
+            color: white;
+            z-index: 3;
+                    position: relative;
+        }
+
+
+</style>
+
+
+<div class="about-container">
+
+
+    <h2 class="fs-1 fw-bold">
+        About Tower of Babel
+    </h2>
+    <p class="fs-3">
+        Tower of Babel is an online book store that provides a wide selection of books in various genres, including fiction, non-fiction, history, romance, and more. We are committed to providing our customers with the best shopping experience by offering competitive prices, fast shipping, and excellent customer service.
+    </p>
+    <p class="fs-3">
+        At Tower of Babel, we believe that reading is one of the best ways to expand our minds and learn about the world around us. That's why we carefully curate our selection of books to provide our customers with the best titles in every category.
+    </p>
+    <p class="fs-3">If you have any questions or concerns, please feel free to contact us using the information provided on our contact page. Thank you for choosing Bable as your go-to destination for books!</p>
+
+</div>
+

@@ -1,0 +1,208 @@
+﻿@*@{
+    ViewData["Title"] = "Home Page";
+}*@
+
+@*<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+*@
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model CategoryWithBooksViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_AdvLayout";
+}
+<style>
+
+    .fa-chevron-right, .fa-chevron-left {
+        font-size: 3em;
+        color: #59ab6e;
+    }
+
+    .grad {
+        background: linear-gradient(to right, #59ab6e,darkgreen);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .carousel-indicators li {
+        background-color: #59ab6e !important;
+    }
+
+    .hoverable-cards.card-img-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .hoverable-cards.card:hover .card-img-overlay {
+        opacity: 0.9;
+    }
+
+    .hoverable-cards.card-body {
+        background-color: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px;
+    }
+
+    .hero-section div img {
+        opacity: 0.3;
+    }
+
+    .trial-container {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+</style>
+<section class="hero-section">
+    <div class="card bg-dark text-white">
+        <img src="/Images/babel-head-section-2.jpg" class="card-img img-fluid rounded" alt="">
+        <div class="card-body card-img-overlay d-grid align-content-lg-center align-items-center">
+            <h2 class="card-title mb-5  text-md-center justify-content-center fs-1 fw-bold ">Welcome to the <small class=" text-success">Tower of Babel</small></h2>
+            <p class="card-text h3 mb-4 text-md-center justify-content-center fs-2">Where You Can Unleash Your Imagination,</p>
+            <p class="card-text h3 mb-4 text-md-center justify-content-center fs-2">Unlock the Secrets of Human History</p>
+            <p class="card-text h3  text-md-center justify-content-center fs-2">And Journey Through Time and Culture </p>
+
+        </div>
+    </div>
+</section>
+
+<section class="hero-carousel bg-light">
+    <h2 class="text-center pt-5 pb-3 grad">Fresh off the Shelves: Check Out Our Latest Additions</h2>
+    <div class="container-fluid" style="margin:0; padding:0;">
+        <div id="myCarousel" class="carousel carousel-dark" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <ol class="carousel-indicators">
+                    @foreach (var indicator in Model.NewBooks)
+                    {
+                        if (indicator == Model.NewBooks.First())
+                        {
+                            <li data-bs-target="#myCarousel" data-bs-slide-to="indicator" class="active"></li>        
+                        }
+                        else
+                        {
+                            <li data-bs-target="#myCarousel" data-bs-slide-to="indicator"></li>     
+                        }
+                    }
+                </ol>
+                @foreach (var newbook in Model.NewBooks)
+                {
+                    if (newbook == Model.NewBooks.First())
+                    {
+                                <div class="carousel-item active">
+                                    <div class="container">
+                                        <div class="row p-5">
+                                            <div class="col-md-8 col-lg-6 order-lg-last">
+                                                <img class="img-fluid" src="/Images/@newbook.CoverImage" alt="@newbook.Title" style="width:24rem; height:40rem;">
+                                            </div>
+                                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                                <div class="text-align-left align-self-center">
+                                                    <h2>@newbook.Title</h2>
+                                                    <p>@newbook.Description</p>
+                                                    <a href="/Book/details/@newbook.Id" class="btn btn-success">View Details</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+                            <div class="container">
+                                <div class="row p-5">
+                                    <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                        <img class="img-fluid" src="/Images/@newbook.CoverImage" alt="@newbook.Title" style="width:24rem; height:40rem;">
+                                    </div>
+                                    <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                        <div class="text-align-left align-self-center">
+                                            <h2>@newbook.Title</h2>
+                                            <p>@newbook.Description</p>
+                                            <a href="/Book/details/@newbook.Id" class="btn btn-success">View Details</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <a class="carousel-control-prev text-decoration-none w-auto ps-3"
+               data-bs-target="#myCarousel"
+               href="#myCarousel"
+               role="button"
+               data-bs-slide="prev">
+                <svg style="color: #59ab6e" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" /> </svg>
+            </a>
+            <a class="carousel-control-next text-decoration-none w-auto pe-3"
+               data-bs-target="#myCarousel"
+               href="#myCarousel"
+               role="button"
+               data-bs-slide="next">
+                <svg style="color: #59ab6e" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" fill="#59ab6e"></path> </svg>
+            </a>
+        </div>
+    </div>
+</section>
+<hr class="mt-5 mb-3"/>
+<section class="best-Sellers mb-5 bg-light">
+    <h2 class="text-center pt-5 pb-5 grad">Find Your Next Must-Read in Our Best Sellers Section</h2>
+    <div class="trial-container">
+        <hr class="mt-2 mb-5" />
+        <div class="row row-cols-4 g-4 flex-wrap">
+            @foreach (var bestSeller in Model.BestBooks)
+            {
+                    <div class="col-md-4">
+                    <div class="card text-center bg-dark text-white hoverable-cards" style="width:17rem; height:30rem;">
+                        <img class="card-img-top" src="/Images/@bestSeller.CoverImage" alt="Category Image" style="width:17rem; height:30rem;">
+                        <div class="card-body card-img-overlay d-grid align-content-lg-center align-items-center hoverable-cards" style="width:17rem; height:30rem;">
+                                <h4 class="card-title mb-3">@bestSeller.Title</h4>
+                                <p class="card-text ">@bestSeller.Description</p>
+                                <h4 class="card-title mt-3 mb-3">Written By: @bestSeller.Author</h4>
+                                <a href="/Book/details/@bestSeller.Id" class="btn btn-success ">Check Details </a>
+                            </div>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</section>
+<hr class="mt-5 mb-3" />
+
+<section class="Categories pb-5 bg-light">
+    <h2 class="text-center pt-5 pb-5 grad">Find Your Next Favorite Genre: Top Categories at the Tower of Babel</h2>
+    <div class="trial-container">
+    <hr class="mt-2 mb-5"/>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 flex-wrap">
+            @foreach (var category in Model.Categories)
+            {
+                    <div class="col">
+                    <div class="card text-center bg-dark text-white hoverable-cards" style="width:22rem; height:40rem;">
+                        <img class="card-img-top" src="/Images/@category.Image" alt="Category Image" style="width:22rem; height:40rem;">
+                        <div class="card-body card-img-overlay d-grid align-content-lg-center align-items-center hoverable-cards" style="width:22rem; height:40rem;">
+                                <h4 class="card-title mb-3">@category.Name</h4>
+                                <p class="card-text ">@category.Description</p>
+                                <a asp-controller="book" asp-action="CategoryBooks" asp-route-id="@category.Id" class="btn btn-success ">Explore @category.Name </a>
+                            </div>
+                        </div>
+                    </div>
+            }
+        </div>
+    </div>
+</section>
+<hr class="mt-5 mb-3" />
+<section class="bg-light">
+    @{
+        await Html.RenderPartialAsync("_reviewPartial", new Review());
+    }
+</section>
+<hr class="mt-5 mb-3" />
+
+
+
